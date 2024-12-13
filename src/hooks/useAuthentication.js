@@ -5,7 +5,8 @@ import{
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
-    signOut
+    signOut,
+    sendSignInLinkToEmail
 } from "firebase/auth"
 
 import {useState, useEffect} from 'react'
@@ -68,6 +69,36 @@ export const useAuthentication = () =>{
         setLoading(false)
     }
 
+    const logout = () =>{
+
+        checkIfIsCancelled();
+        signOut(auth)
+    }
+
+    const login = async(data) =>{
+        checkIfIsCancelled()
+
+        setLoading(true)
+        setError(false)
+
+
+        try {
+            await signInWithEmailAndPassword(auth, data.email, data.password)
+            setLoading(false)
+        } catch(error){
+            let systemErrorMessage;
+
+            if(error.message.includes("invalid")){
+                systemErrorMessage = "Usuário ou senha incorretos";
+            } else{
+                systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde."
+            }
+
+            setError(systemErrorMessage)
+            setLoading(false)
+        }
+    }
+
     useEffect(() =>{
         return () => setCancelled(true);
     },[])
@@ -76,7 +107,9 @@ export const useAuthentication = () =>{
         auth,
         createUser,
         error,
-        loading
+        loading,
+        logout,
+        login
     }
 
 }
