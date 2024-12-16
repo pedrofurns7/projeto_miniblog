@@ -26,7 +26,7 @@ const Register = () => {
       password
     }
 
-    if(password != confirmPassword){
+    if(password !== confirmPassword){
       setError("As senhas precisar ser iguais!")
       return
     }
@@ -96,7 +96,7 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </label>
-          
+          <button className="btn">Cadastrar</button>
           {!loading && <button className="btn">Cadastrar</button>}
           {loading &&(
             <button className="btn" disabled>
