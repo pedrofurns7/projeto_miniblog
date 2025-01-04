@@ -20,6 +20,7 @@ import Search from "./pages/Search/Search";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Post from "./pages/Post/Post";
+import UpdatePost from "./pages/UpdatePost/UpdatePost";
 
 //components
 import Navbar from "./components/Navbar";
@@ -61,7 +62,11 @@ function App() {
                 element={!user ? <Register /> : <Navigate to="/" />}
               />
               <Route
-                path="/post/create"
+                path="/posts/edit/:id"
+                element={user ? <UpdatePost /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/posts/create"
                 element={user ? <CreatePost /> : <Navigate to="/login" />}
               />
               <Route
